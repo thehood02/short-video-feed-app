@@ -4,7 +4,7 @@ const MyAppText = props => {
   return (
     <Text
       style={{
-        fontFamily: 'Montserrat-Medium',
+        fontFamily: 'Montserrat-Regular',
         color: '#FFF',
         fontSize: 14,
         ...props.style,

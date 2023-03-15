@@ -8,22 +8,17 @@
 import React from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
-  Text,
-  View,
 } from 'react-native';
 
-import MyAppText from './src/CustomComponents/MyAppText';
+import Reels from './src/Reels';
 
 function App(): JSX.Element {
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle={"light-content"} />
-        <View style={{minHeight: '100%', backgroundColor: '#000'}}>
-          <MyAppText>my new app</MyAppText>
-        </View>
+      <StatusBar barStyle={'light-content'} />
+      <Reels />
     </SafeAreaView>
   );
 }
