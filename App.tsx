@@ -14,16 +14,16 @@ import {
   View,
 } from 'react-native';
 
+import MyAppText from './src/CustomComponents/MyAppText';
+
 function App(): JSX.Element {
 
   return (
     <SafeAreaView>
       <StatusBar barStyle={"light-content"} />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View>
-          <Text style={{fontFamily: 'Montserrat-Medium'}}>My new app</Text>
+        <View style={{minHeight: '100%', backgroundColor: '#000'}}>
+          <MyAppText>my new app</MyAppText>
         </View>
-      </ScrollView>
     </SafeAreaView>
   );
 }
