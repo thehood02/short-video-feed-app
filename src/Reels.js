@@ -2,15 +2,8 @@ import {useState} from "react";
 import {View, TouchableOpacity, Image, StyleSheet, TextInput, Modal, TouchableWithoutFeedback, FlatList} from "react-native";
 import Video from "react-native-video";
 import MyAppText from "./CustomComponents/MyAppText";
-
-import img0 from "../assets/icons/profiles/Group-0.png";
-import img1 from "../assets/icons/profiles/Group-4.png";
-import img2 from "../assets/icons/profiles/Group-1.png";
-import img3 from "../assets/icons/profiles/Group-2.png";
-import img4 from "../assets/icons/profiles/Group-3.png";
-import img5 from '../assets/icons/profiles/Group-5.png';
-
-const images = [img0, img1, img2, img3, img4, img5];
+import IconButton from "./CustomComponents/IconButton";
+import ProfileIcon from "./CustomComponents/ProfileIcon";
 
 const VideoTitle = ({title, time}) => {
   return (
@@ -34,17 +27,6 @@ const VideoTitle = ({title, time}) => {
     </View>
   );
 };
-
-const IconButton = ({icon, onPress}) => {
-    return (
-      <TouchableOpacity activeOpacity={0.85} style={styles.btn} onPress={onPress}>
-        <Image
-          source={icon}
-          style={styles.btnIcon}
-        />
-      </TouchableOpacity>
-    );
-}
 
 const Reels = () => {
 
@@ -329,9 +311,20 @@ const Reels = () => {
       limit: 30,
     };
 
-    const randomNumber = () => {
-      return Math.floor(Math.random() * images.length);
-    }
+    const renderItem = item => {
+      return (
+        <View
+          style={styles.commentContainer}>
+          <ProfileIcon />
+          <MyAppText
+            style={{
+              paddingHorizontal: 18,
+            }}>
+            {item.body}
+          </MyAppText>
+        </View>
+      );
+    };
 
     return (
       <View style={styles.mainContainer}>
@@ -398,28 +391,7 @@ const Reels = () => {
                     data={commentsData.comments}
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={false}
-                    renderItem={({item}) => {
-                      return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginBottom: 28,
-                          }}>
-                          <Image
-                            resizeMode="contain"
-                            source={images[randomNumber()]}
-                            style={{height: 24, width: 24}}
-                          />
-                          <MyAppText
-                            style={{
-                              paddingHorizontal: 18,
-                            }}>
-                            {item.body}
-                          </MyAppText>
-                        </View>
-                      );
-                    }}
+                    renderItem={({item}) => renderItem(item)}
                   />
                 </View>
             </TouchableWithoutFeedback>
@@ -462,19 +434,6 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingHorizontal: 8,
   },
-  btn: {
-    height: 32,
-    width: 50,
-    backgroundColor: '#302F34',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    marginLeft: 14,
-  },
-  btnIcon: {
-    height: 22,
-    width: 22,
-  },
   modalBackground: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.8)',
@@ -484,13 +443,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: '10%',
   },
   modalContainer: {
-    height: "100%",
-    width: "100%",
+    height: '100%',
+    width: '100%',
     minHeight: 400,
     minWidth: 300,
     backgroundColor: '#302F34',
     borderRadius: 36,
     paddingVertical: 40,
     paddingHorizontal: 20,
+  },
+  commentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 28,
   },
 });
