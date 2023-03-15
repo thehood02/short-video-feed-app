@@ -1,4 +1,4 @@
-import {View, TouchableOpacity, Image, StyleSheet} from "react-native";
+import {View, TouchableOpacity, Image, StyleSheet, TextInput} from "react-native";
 import Video from "react-native-video";
 import MyAppText from "./CustomComponents/MyAppText";
 
@@ -25,6 +25,17 @@ const VideoTitle = ({title, time}) => {
   );
 };
 
+const IconButton = ({icon, onPress}) => {
+    return (
+      <TouchableOpacity style={styles.btn}>
+        <Image
+          source={icon}
+          style={styles.btnIcon}
+        />
+      </TouchableOpacity>
+    );
+}
+
 const Reels = () => {
     return (
       <View style={styles.mainContainer}>
@@ -43,12 +54,30 @@ const Reels = () => {
         <Video
           paused={false}
           repeat={true}
-          resizeMode={"cover"}
+          resizeMode={'cover'}
           source={{
             uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
           }}
-          style={{flex: 1, borderRadius: 36, marginTop: 32}}
+          style={{flex: 1, borderRadius: 36, marginVertical: 32}}
         />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <TextInput
+            placeholder="write a comment"
+            placeholderTextColor={'#C4C4C4'}
+            style={styles.commentInput}
+          />
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <IconButton
+              icon={require('../assets/icons/view-comments-btn.png')}
+            />
+            <IconButton icon={require('../assets/icons/like-btn.png')} />
+          </View>
+        </View>
       </View>
     );
 }
@@ -74,5 +103,29 @@ const styles = StyleSheet.create({
     height: 16,
     width: 16,
     marginRight: 4,
+  },
+  commentInput: {
+    height: 32,
+    flex: 1,
+    backgroundColor: '#302F34',
+    color: '#fff',
+    fontSize: 12,
+    fontFamily: 'Montserrat-Regular',
+    borderRadius: 10,
+    padding: 0,
+    paddingHorizontal: 8
+  },
+  btn: {
+    height: 32,
+    width: 50,
+    backgroundColor: '#302F34',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginLeft: 14,
+  },
+  btnIcon: {
+    height: 22,
+    width: 22,
   },
 });
