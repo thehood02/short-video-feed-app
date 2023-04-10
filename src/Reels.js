@@ -1,9 +1,12 @@
 import {useState} from "react";
-import {View, TouchableOpacity, Image, StyleSheet, TextInput, Modal, TouchableWithoutFeedback, FlatList} from "react-native";
+import {View, TouchableOpacity, Image, StyleSheet, TextInput, Modal, TouchableWithoutFeedback, FlatList, Dimensions} from "react-native";
 import Video from "react-native-video";
+import Carousel from "react-native-snap-carousel";
 import MyAppText from "./CustomComponents/MyAppText";
 import IconButton from "./CustomComponents/IconButton";
 import ProfileIcon from "./CustomComponents/ProfileIcon";
+
+const width = Dimensions.get('window').width;
 
 const VideoTitle = ({title, time}) => {
   return (
@@ -311,6 +314,19 @@ const Reels = () => {
       limit: 30,
     };
 
+    const videos = [
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.jpg',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+    ];
+
     const renderItem = item => {
       return (
         <View
@@ -328,6 +344,28 @@ const Reels = () => {
 
     return (
       <View style={styles.mainContainer}>
+        <Carousel
+          data={videos}
+          containerCustomStyle={{
+            flex: 1,
+            borderColor: 'green',
+            borderWidth: 2,
+            backgroundColor: 'red',
+          }}
+          renderItem={({item}) => (
+            <Video
+              paused={commentsModalVisible}
+              repeat={true}
+              resizeMode={'cover'}
+              source={{
+                uri: item,
+              }}
+              style={{flex: 1, borderRadius: 36, marginVertical: 14}}
+            />
+          )}
+          sliderWidth={width - 60}
+          itemWidth={width - 60}
+        />
         <View style={{flexDirection: 'row'}}>
           <VideoTitle title={'video title'} time={'1 day ago'} />
           <TouchableOpacity activeOpacity={0.8} style={styles.addBtn}>
@@ -340,7 +378,7 @@ const Reels = () => {
             </MyAppText>
           </TouchableOpacity>
         </View>
-        <Video
+        {/* <Video
           paused={commentsModalVisible}
           repeat={true}
           resizeMode={'cover'}
@@ -348,7 +386,7 @@ const Reels = () => {
             uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
           }}
           style={{flex: 1, borderRadius: 36, marginVertical: 14}}
-        />
+        /> */}
         <View
           style={{
             flexDirection: 'row',
@@ -385,15 +423,14 @@ const Reels = () => {
             onPress={() => setCommentsModalVisible(false)}
             style={styles.modalBackground}>
             <TouchableWithoutFeedback>
-              <View
-                style={styles.modalContainer}>
-                  <FlatList
-                    data={commentsData.comments}
-                    keyExtractor={item => item.id}
-                    showsVerticalScrollIndicator={false}
-                    renderItem={({item}) => renderItem(item)}
-                  />
-                </View>
+              <View style={styles.modalContainer}>
+                <FlatList
+                  data={commentsData.comments}
+                  keyExtractor={item => item.id}
+                  showsVerticalScrollIndicator={false}
+                  renderItem={({item}) => renderItem(item)}
+                />
+              </View>
             </TouchableWithoutFeedback>
           </TouchableOpacity>
         </Modal>
